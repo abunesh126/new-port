@@ -1,5 +1,5 @@
 import React from 'react';
-import type { NavItem, HeroUser, SocialLink } from '../types/hero.types';
+import type { SocialLink } from '../types/hero.types';
 import { heroData } from '../data/heroData';
 import '../styles/HeroPage.css';
 
@@ -17,116 +17,7 @@ const LinkedInIcon = () => (
   </svg>
 );
 
-const ExternalLinkIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
-    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-    <polyline points="15,3 21,3 21,9" /><line x1="10" y1="14" x2="21" y2="3" />
-  </svg>
-);
 
-// ─── Navbar ───────────────────────────────────────────────────────────────────
-
-interface NavbarProps {
-  items: NavItem[];
-  user: HeroUser;
-  website: string;
-  resumeUrl: string;
-}
-
-const Navbar: React.FC<NavbarProps> = ({ items, user, website, resumeUrl }) => {
-  const [open, setOpen] = React.useState(false);
-
-  return (
-    <nav className="hero-nav" role="navigation" aria-label="Main navigation">
-      {/* Logo */}
-      <a href="/" className="hero-nav__logo" aria-label="Go to homepage">
-        <div className="hero-nav__logo-img">
-          {user.logoUrl
-            ? <img src={user.logoUrl} alt={`${user.name} logo`} />
-            : <span className="hero-nav__logo-fallback">{user.name[0]}</span>}
-        </div>
-        <div className="hero-nav__logo-text">
-          <span className="hero-nav__logo-name">{user.name}</span>
-          <span className="hero-nav__logo-role">{user.role}</span>
-        </div>
-      </a>
-
-      {/* Desktop links */}
-      <ul className="hero-nav__links" role="list">
-        {items.map((item) => (
-          <li key={item.href}>
-            <a href={item.href} className="hero-nav__link">{item.label}</a>
-          </li>
-        ))}
-      </ul>
-
-      {/* Portfolio link */}
-      <a
-        href={website}
-        target="_blank"
-        rel="noreferrer"
-        className="hero-nav__portfolio"
-        aria-label="Visit portfolio website"
-      >
-        Portfolio <ExternalLinkIcon />
-      </a>
-
-      {/* Resume download */}
-      <a
-        href={resumeUrl}
-        target="_blank"
-        rel="noreferrer"
-        download
-        className="hero-nav__resume"
-        aria-label="Download resume PDF"
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-          <polyline points="7,10 12,15 17,10" />
-          <line x1="12" y1="15" x2="12" y2="3" />
-        </svg>
-        Resume
-      </a>
-
-      {/* Mobile hamburger */}
-      <button
-        className={`hero-nav__hamburger${open ? ' hero-nav__hamburger--open' : ''}`}
-        aria-label={open ? 'Close menu' : 'Open menu'}
-        aria-expanded={open}
-        onClick={() => setOpen(!open)}
-      >
-        <span /><span /><span />
-      </button>
-
-      {/* Mobile drawer */}
-      {open && (
-        <div className="hero-nav__drawer" role="dialog" aria-label="Mobile navigation">
-          <ul role="list">
-            {items.map((item) => (
-              <li key={item.href}>
-                <a href={item.href} className="hero-nav__drawer-link" onClick={() => setOpen(false)}>
-                  {item.label}
-                </a>
-              </li>
-            ))}
-            <li>
-              <a
-                href={resumeUrl}
-                target="_blank"
-                rel="noreferrer"
-                download
-                className="hero-nav__drawer-link hero-nav__drawer-resume"
-                onClick={() => setOpen(false)}
-              >
-                ⬇ Download Resume
-              </a>
-            </li>
-          </ul>
-        </div>
-      )}
-    </nav>
-  );
-};
 
 // ─── Highlight Pills ──────────────────────────────────────────────────────────
 
@@ -243,10 +134,10 @@ const ScrollCue: React.FC = () => (
 // ─── Main HeroPage ────────────────────────────────────────────────────────────
 
 const HeroPage: React.FC = () => {
-  const { nav, user, content } = heroData;
+  const { user, content } = heroData;
 
   return (
-    <div className="hero-page" id="home">
+    <div className="hero-page">
 
       {/* ── Background layer ── */}
       <div className="hero-bg" aria-hidden="true">
@@ -259,8 +150,6 @@ const HeroPage: React.FC = () => {
           ))}
         </div>
       </div>
-
-      <Navbar items={nav} user={user} website={user.website} resumeUrl={user.resumeUrl} />
 
       <main className="hero-main">
 

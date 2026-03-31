@@ -1,0 +1,237 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Contact.css — Minimalist Dark-themed Contact Section 
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Import a serif font specifically for the elegant heading to match the image */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap');
+
+:root {
+  /* Using explicit dark colors to match the aesthetic, falling back to variables if needed */
+  --contact-bg: #1e1e1e;
+  --contact-text-main: #f5f5f5;
+  --contact-text-sec: #d4d4d4;
+  --contact-border: rgba(255, 255, 255, 0.2);
+  --contact-btn-bg: #555555;
+  --contact-btn-bg-hover: #6a6a6a;
+}
+
+/* If app is purely themeable, we map it inverted for light mode: 
+   Wait, the user said "exactly like this" which is dark. 
+   We will force these tokens inside the wrapper so it stays true to the design 
+   regardless of the global theme, OR map them smoothly. Let's map it smoothly 
+   but keep the dark mode looking exactly like the spec. 
+*/
+
+html.light {
+  --contact-bg: #fdfdfd;
+  --contact-text-main: #111111;
+  --contact-text-sec: #444444;
+  --contact-border: rgba(0, 0, 0, 0.2);
+  --contact-btn-bg: #888888;
+  --contact-btn-bg-hover: #555555;
+}
+
+.contact-wrapper {
+  background-color: var(--contact-bg);
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 2rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--contact-text-sec);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.contact-container {
+  max-width: 1000px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+
+/* ── Left Side (Form) ── */
+.contact-form-side {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-title {
+  font-family: 'Playfair Display', serif; /* elegant serif matching the image */
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  font-weight: 400;
+  color: var(--contact-text-main);
+  margin-bottom: 2rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.contact-subtitle {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 4rem;
+  color: var(--contact-text-sec);
+  max-width: 320px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  max-width: 400px;
+}
+
+.input-group {
+  position: relative;
+}
+
+.input-group input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--contact-border);
+  padding: 0 0 0.8rem 0;
+  font-size: 0.95rem;
+  color: var(--contact-text-main);
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+}
+
+.input-group input::placeholder {
+  color: var(--contact-text-sec);
+  opacity: 1;
+}
+
+.input-group input:focus {
+  border-bottom-color: var(--contact-text-main);
+}
+
+.btn-submit {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  background: var(--contact-btn-bg);
+  color: #ffffff; /* always white as per image */
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s ease, opacity 0.2s ease;
+  font-family: inherit;
+  overflow: hidden;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background: var(--contact-btn-bg-hover);
+}
+
+.btn-submit:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+.btn-submit--active {
+  background: var(--contact-btn-bg-hover);
+}
+
+.btn-status-content {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.spinner-icon {
+  width: 18px;
+  height: 18px;
+  animation: contact-spin 1.2s linear infinite;
+}
+
+@keyframes contact-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.check-icon {
+  width: 18px;
+  height: 18px;
+  color: #4ade80; /* Elegant soft green */
+}
+
+/* ── Right Side (Info) ── */
+.contact-info-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Align towards bottom to match image */
+  gap: 2.5rem;
+  padding-bottom: 0.5rem; /* align exactly with button baseline */
+}
+
+.info-block h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--contact-text-sec);
+  margin-bottom: 0.8rem;
+}
+
+.info-block p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+  color: var(--contact-text-main);
+}
+
+.social-icons {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.social-icons a {
+  color: var(--contact-text-main);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-icons a svg {
+  width: 18px;
+  height: 18px;
+}
+
+.social-icons a:hover {
+  opacity: 0.7;
+  transform: translateY(-2px);
+}
+
+/* ── Responsiveness ── */
+@media (max-width: 820px) {
+  .contact-container {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+  
+  .contact-info-side {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-wrapper {
+    padding: 4rem 1.5rem;
+  }
+  
+  .contact-title {
+    font-size: 2.8rem;
+  }
+  
+  .btn-submit {
+    width: 100%;
+  }
+}
