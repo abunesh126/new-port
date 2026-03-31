@@ -1,0 +1,397 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   TechStackPage.css — sidebar + icon grid layout
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap');
+
+/* ── Token fallbacks ─────────────────────────────────────────────────────── */
+:root {
+  --c-bg:           #060910;
+  --c-surface:      #0d1220;
+  --c-card:         rgba(255 255 255 / .04);
+  --c-border:       rgba(255 255 255 / .08);
+  --c-border-hi:    rgba(99 179 255 / .3);
+  --c-blue:         #3B82F6;
+  --c-blue-light:   #60A5FA;
+  --c-cyan:         #22D3EE;
+  --c-purple:       #8B5CF6;
+  --c-purple-light: #A78BFA;
+  --c-green:        #10B981;
+  --c-text-hi:      #F0F6FF;
+  --c-text-mid:     #94A3B8;
+  --c-text-lo:      #475569;
+  --radius-sm:      8px;
+  --radius-md:      14px;
+  --radius-lg:      22px;
+  --radius-full:    9999px;
+  --ease:           cubic-bezier(.4, 0, .2, 1);
+  --spring:         cubic-bezier(.34, 1.56, .64, 1);
+  --dur:            .25s;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   SECTION SHELL
+   ════════════════════════════════════════════════════════════════════════════ */
+.tsg-section {
+  font-family: 'Inter', system-ui, sans-serif;
+  position: relative;
+  padding: 6rem 0 7rem;
+  background: var(--c-bg);
+  overflow: hidden;
+  color: var(--c-text-hi);
+}
+
+/* ── Background ─────────────────────────────────────────────────────────── */
+.tsg-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.tsg-bg__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(59,130,246,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 120% 100% at 50% 50%, black 40%, transparent 80%);
+}
+.tsg-bg__glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(130px);
+  opacity: .10;
+}
+.tsg-bg__glow--blue {
+  width: 600px; height: 500px;
+  background: radial-gradient(circle, var(--c-blue), transparent 70%);
+  top: -100px; right: -80px;
+  animation: tsgGlowDrift 14s ease-in-out infinite alternate;
+}
+.tsg-bg__glow--purple {
+  width: 500px; height: 400px;
+  background: radial-gradient(circle, var(--c-purple), transparent 70%);
+  bottom: -80px; left: -60px;
+  animation: tsgGlowDrift 18s ease-in-out infinite alternate-reverse;
+}
+@keyframes tsgGlowDrift {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(50px, 40px) scale(1.1); }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   CONTAINER
+   ════════════════════════════════════════════════════════════════════════════ */
+.tsg-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   SECTION HEADER
+   ════════════════════════════════════════════════════════════════════════════ */
+.tsg-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  animation: tsgFadeUp .65s var(--ease) both;
+}
+.tsg-header__title {
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: -.04em;
+  line-height: 1.05;
+  background: linear-gradient(135deg, var(--c-text-hi) 20%, var(--c-blue-light) 60%, var(--c-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+.tsg-header__subtitle {
+  font-size: .98rem;
+  line-height: 1.72;
+  color: var(--c-text-mid);
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   BODY  (sidebar + grid)
+   ════════════════════════════════════════════════════════════════════════════ */
+.tsg-body {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   SIDEBAR
+   ════════════════════════════════════════════════════════════════════════════ */
+.tsg-sidebar {
+  background: rgba(13,18,32,.82);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1rem;
+  backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  position: sticky;
+  top: 1.5rem;
+  animation: tsgFadeUp .65s .1s var(--ease) both;
+}
+
+.tsg-sidebar__heading {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--c-text-lo);
+  padding: 0 .6rem;
+  margin-bottom: .75rem;
+}
+
+.tsg-sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  width: 100%;
+  background: none;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: .65rem .75rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: .88rem;
+  font-weight: 500;
+  color: var(--c-text-mid);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    color var(--dur) var(--ease),
+    background var(--dur) var(--ease),
+    transform var(--dur) var(--spring);
+}
+.tsg-sidebar__item:hover {
+  color: var(--c-text-hi);
+  background: rgba(255 255 255 / .05);
+}
+.tsg-sidebar__item--active {
+  color: var(--c-text-hi);
+  background: rgba(59,130,246,.12);
+  font-weight: 600;
+}
+.tsg-sidebar__item--active .tsg-sidebar__item-icon {
+  color: var(--c-blue-light);
+}
+.tsg-sidebar__item--active .tsg-sidebar__item-chevron {
+  color: var(--c-blue-light);
+  transform: rotate(90deg);
+}
+
+.tsg-sidebar__item-icon {
+  color: var(--c-text-lo);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: color var(--dur) var(--ease);
+}
+.tsg-sidebar__item-label {
+  flex: 1;
+}
+.tsg-sidebar__item-chevron {
+  color: var(--c-text-lo);
+  flex-shrink: 0;
+  transition: transform var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   GRID WRAPPER — fade+slide on category switch
+   ════════════════════════════════════════════════════════════════════════════ */
+.tsg-grid-wrap {
+  animation: tsgGridIn .3s var(--ease) both;
+}
+@keyframes tsgGridIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Icon Grid ── */
+.tsg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   TECH CARD  — flip on hover
+   ════════════════════════════════════════════════════════════════════════════ */
+.tsg-card {
+  --accent: var(--c-blue-light);
+  --delay: 0ms;
+
+  position: relative;
+  aspect-ratio: 1;
+  perspective: 800px;
+  transform-style: preserve-3d;
+  cursor: default;
+  animation: tsgCardIn .35s var(--delay) var(--ease) both;
+}
+@keyframes tsgCardIn {
+  from { opacity: 0; transform: scale(.92) translateY(12px); }
+  to   { opacity: 1; transform: scale(1)  translateY(0); }
+}
+
+.tsg-card__face {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: transform .5s cubic-bezier(.4, 0, .2, 1);
+}
+
+/* Front face */
+.tsg-card__face--front {
+  background: rgba(13,18,32,.80);
+  border: 1px solid var(--c-border);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .85rem;
+  transform: rotateY(0deg);
+  transition:
+    transform .5s var(--ease),
+    border-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+.tsg-card:hover .tsg-card__face--front {
+  transform: rotateY(-180deg);
+}
+
+/* Back face */
+.tsg-card__face--back {
+  background: rgba(10,14,26,.95);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.1rem 1rem;
+  gap: .6rem;
+  transform: rotateY(180deg);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--accent), transparent 75%);
+}
+.tsg-card:hover .tsg-card__face--back {
+  transform: rotateY(0deg);
+}
+
+/* Icon tile */
+.tsg-card__icon-wrap {
+  width: 64px; height: 64px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--dur) var(--spring);
+}
+.tsg-card:hover .tsg-card__icon-wrap {
+  transform: scale(1.06);
+}
+.tsg-card__icon-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  display: block;
+  /* keep SVGs readable against dark bg */
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,.4));
+}
+
+/* Name */
+.tsg-card__name {
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--c-text-hi);
+  text-align: center;
+  letter-spacing: -.01em;
+}
+
+/* Back — "What I've Learned" */
+.tsg-card__learned-title {
+  font-family: 'Fira Code', monospace;
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: .1rem;
+}
+
+.tsg-card__learned-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  padding: 0;
+}
+.tsg-card__learned-list li {
+  font-size: .72rem;
+  line-height: 1.4;
+  color: var(--c-text-mid);
+  padding-left: .95rem;
+  position: relative;
+}
+.tsg-card__learned-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: .9em;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   SHARED KEYFRAME
+   ════════════════════════════════════════════════════════════════════════════ */
+@keyframes tsgFadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* Tablet — sidebar shrinks, grid goes 3-col */
+@media (max-width: 1024px) {
+  .tsg-body              { grid-template-columns: 200px 1fr; gap: 1.5rem; }
+  .tsg-grid              { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Small tablet — row layout, sidebar becomes horizontal tabs */
+@media (max-width: 768px) {
+  .tsg-body              { grid-template-columns: 1fr; }
+  .tsg-sidebar           { flex-direction: row; flex-wrap: wrap; gap: .35rem; position: static; padding: 1rem; }
+  .tsg-sidebar__heading  { display: none; }
+  .tsg-sidebar__item     { flex: 0 0 auto; padding: .5rem .85rem; font-size: .8rem; }
+  .tsg-sidebar__item-chevron { display: none; }
+  .tsg-grid              { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Mobile — 3-col grid */
+@media (max-width: 600px) {
+  .tsg-section           { padding: 4rem 0 5rem; }
+  .tsg-container         { padding: 0 1.25rem; }
+  .tsg-header__title     { font-size: 2rem; }
+  .tsg-grid              { grid-template-columns: repeat(3, 1fr); gap: .7rem; }
+}
+
+/* Very small — 2-col */
+@media (max-width: 380px) {
+  .tsg-grid { grid-template-columns: repeat(2, 1fr); }
+}
