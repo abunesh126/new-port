@@ -55,7 +55,7 @@ function Home() {
 function App() {
   return (
     <ThemeProvider>
-      <BrowserRouter basename="/Abunesh-RP/">
+      <BrowserRouter>
         {/* Fixed navbar — sits above all content */}
         <Navbar />
 
